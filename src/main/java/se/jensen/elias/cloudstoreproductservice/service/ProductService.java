@@ -30,7 +30,7 @@ public class ProductService {
     public ProductDTO getProductById(Long id) {
         ProductDTO response = restTemplate.getForObject(API_URL + "/" + id, ProductDTO.class);
         if (response == null) {
-            throw new RuntimeException("Produkt with id " + id + " does not exist");
+            throw new ResourceNotFoundException("Produkt with id " + id + " does not exist");
         }
         return response;
     }

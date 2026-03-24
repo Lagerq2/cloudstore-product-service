@@ -19,11 +19,16 @@ public class ProductService {
     }
 
     public List<ProductDTO> getProducts() {
-        ProductDTO[] response = restTemplate.getForObject(API_URL, ProductDTO[].class);
-        if (response == null) {
-            throw new RuntimeException("No products found");
+        try {
+            ProductDTO[] response = restTemplate.getForObject(API_URL, ProductDTO[].class);
+            if (response == null) {
+                throw new RuntimeException("No products found");
+            }
+            return Arrays.asList(response);
+        } catch (Exception e) {
+            System.err.println("Felet är: " + e.getMessage());
+            throw new ResourceNotFoundException("No products found");
         }
-        return Arrays.asList(response);
     }
 
     public ProductDTO getProductById(Long id) {
